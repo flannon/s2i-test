@@ -3,16 +3,25 @@
 FROM openshift/base-centos7
 
 # TODO: Put the maintainer name in the image metadata
- MAINTAINER Flannon <flannon@nyu.edu>
+MAINTAINER Flannon <flannon@nyu.edu>
+
+ENV HOME=/opt/app-root
+
+RUN mkdir -p ${HOME} && \
+    [[ $(grep default /etc/passwd) ]] || \
+        useradd -u 1001 -r -g 0 -d ${HOME} -s /sbin/nologin \
+        -c "Default Application User" default
 
 # TODO: Rename the builder environment variable to inform users about application you provide them
 # ENV BUILDER_VERSION 1.0
+ENV TESTER=test
 
 # TODO: Set labels used in OpenShift to describe the builder image
 LABEL io.k8s.description="Test Platform for building oc images" \
       io.k8s.display-name="builder 0.0.1" \
       io.openshift.expose-services="8080:http" \
-      io.openshift.tags="builder,0.0.1,etc."
+      io.openshift.tags="builder,0.0.1,test" \
+      io.openshift.s2i.scripts-url="image://${HOME}/s2i/bin"
 
 # TODO: Install required packages here:
 # RUN yum install -y ... && yum clean all -y
@@ -24,10 +33,20 @@ RUN yum install -y rubygems && yum clean all -y
 
 # TODO: Copy the S2I scripts to /usr/libexec/s2i, since openshift/base-centos7 image
 # sets io.openshift.s2i.scripts-url label that way, or update that label
-COPY ./s2i/bin/ /usr/libexec/s2i
+#COPY ./s2i/bin/ /usr/libexec/s2i
+COPY ./s2i ${HOME}/s2i
+COPY ./run ${HOME}/run
+
+
+
+
 
 # TODO: Drop the root user and make the content of /opt/app-root owned by user 1001
 # RUN chown -R 1001:1001 /opt/app-root
+RUN chown -R 1001:0 /opt/app-root && \
+  │ find ${HOME} -type d -exec chmod g+ws {} \;
+
+WORKDIR ${HOME}
 
 # This default user is created in the openshift/base-centos7 image
 USER 1001
