@@ -9,4 +9,4 @@
 
 set -eo pipefail
 
-exec ${HOME}/run
+exec ${HOME}/init.sh

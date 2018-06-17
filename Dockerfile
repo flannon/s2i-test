@@ -24,7 +24,8 @@ LABEL io.k8s.description="Test Platform for building oc images" \
       io.k8s.display-name="builder 0.0.1" \
       io.openshift.expose-services="8080:http" \
       io.openshift.tags="builder,0.0.1,test" \
-      io.openshift.s2i.scripts-url="image://${HOME}/s2i/bin"
+      io.openshift.s2i.scripts-url="image:///usr/libexec/s2i" 
+      #io.openshift.s2i.scripts-url="image://${HOME}/s2i/bin"
 
 # TODO: Install required packages here:
 # RUN yum install -y ... && yum clean all -y
@@ -37,7 +38,7 @@ RUN yum install -y rubygems && yum clean all -y
 # TODO: Copy the S2I scripts to /usr/libexec/s2i, since openshift/base-centos7 image
 # sets io.openshift.s2i.scripts-url label that way, or update that label
 COPY ./s2i /usr/libexec/s2i
-COPY ./s2i ${HOME}/s2i
+#COPY ./s2i ${HOME}/s2i
 COPY ./run ${HOME}/run
 
 
@@ -60,5 +61,5 @@ USER 1001
 # EXPOSE 8080
 
 # TODO: Set the default CMD for the image
-#CMD ["/usr/libexec/s2i/run"]
-CMD ["/opt/app-root/run"]
+CMD ["/usr/libexec/s2i/bin/run"]
+#CMD ["/opt/app-root/run"]
