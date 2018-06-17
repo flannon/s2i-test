@@ -33,7 +33,7 @@ RUN yum install -y rubygems && yum clean all -y
 
 # TODO: Copy the S2I scripts to /usr/libexec/s2i, since openshift/base-centos7 image
 # sets io.openshift.s2i.scripts-url label that way, or update that label
-#COPY ./s2i/bin/ /usr/libexec/s2i
+COPY ./s2i/bin/ /usr/libexec/s2i
 COPY ./s2i ${HOME}/s2i
 COPY ./run ${HOME}/run
 
