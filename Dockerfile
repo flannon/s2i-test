@@ -3,21 +3,21 @@
 FROM openshift/base-centos7
 
 # TODO: Put the maintainer name in the image metadata
-# MAINTAINER Your Name <your@email.com>
+ MAINTAINER Flannon <flannon@nyu.edu>
 
 # TODO: Rename the builder environment variable to inform users about application you provide them
 # ENV BUILDER_VERSION 1.0
 
 # TODO: Set labels used in OpenShift to describe the builder image
-#LABEL io.k8s.description="Platform for building xyz" \
-#      io.k8s.display-name="builder x.y.z" \
-#      io.openshift.expose-services="8080:http" \
-#      io.openshift.tags="builder,x.y.z,etc."
+LABEL io.k8s.description="Test Platform for building oc images" \
+      io.k8s.display-name="builder 0.0.1" \
+      io.openshift.expose-services="8080:http" \
+      io.openshift.tags="builder,0.0.1,etc."
 
 # TODO: Install required packages here:
 # RUN yum install -y ... && yum clean all -y
 RUN yum install -y rubygems && yum clean all -y
-RUN gem install asdf
+#RUN gem install asdf
 
 # TODO (optional): Copy the builder files into /opt/app-root
 # COPY ./<builder_folder>/ /opt/app-root/
