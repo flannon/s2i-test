@@ -1,9 +1,8 @@
-
 # testImage
 
 #FROM tomcat:8.5.15-jre8-alpine
-#FROM openshift/base-centos7
-FROM centos:centos7 
+FROM openshift/base-centos7
+#FROM centos:centos7 
 
 # TODO: Put the maintainer name in the image metadata
 MAINTAINER Flannon <flannon@nyu.edu>
@@ -30,7 +29,7 @@ LABEL io.k8s.description="Test Platform for building oc images" \
 # TODO: Install required packages here:
 # RUN yum install -y ... && yum clean all -y
 RUN yum install -y epel-release && \
-    #yum install -y && \
+    yum install -y python34 python34-devel python34-pip && \
     yum clean all -y
 
 # TODO (optional): Copy the builder files into /opt/app-root
