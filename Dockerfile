@@ -29,20 +29,16 @@ LABEL io.k8s.description="Test Platform for building oc images" \
 
 # TODO: Install required packages here:
 # RUN yum install -y ... && yum clean all -y
-RUN yum install -y rubygems && yum clean all -y
-#RUN gem install asdf
+RUN yum install -y epel-release && \
+    #yum install -y && \
+    yum clean all -y
 
 # TODO (optional): Copy the builder files into /opt/app-root
 # COPY ./<builder_folder>/ /opt/app-root/
 
-# TODO: Copy the S2I scripts to /usr/libexec/s2i, since openshift/base-centos7 image
+# Copy the S2I scripts to /usr/libexec/s2i, since openshift/base-centos7 image
 # sets io.openshift.s2i.scripts-url label that way, or update that label
-
-#RUN [[ ! -d /usr/libexec/s2i ]] && mkdir -p /usr/libexec/s2i && \
-#    chmod 777 /usr/libexec/s2i
-
 COPY ./s2i /usr/libexec/s2i
-#COPY ./s2i ${HOME}/s2i
 COPY ./init.sh ${HOME}/init.sh
 
 
