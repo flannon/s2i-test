@@ -43,10 +43,12 @@ COPY ./run ${HOME}/run
 
 # TODO: Drop the root user and make the content of /opt/app-root owned by user 1001
 # RUN chown -R 1001:1001 /opt/app-root
-RUN chown -R 1001:0 /opt/app-root && \
-  │ find ${HOME} -type d -exec chmod g+ws {} \;
+#
+#RUN chown -R 1001:0 /opt/app-root && \
+#    find ${HOME} -type d -exec chmod g+ws {} \;
+RUN chown -R 1001:0 /opt/app-root 
 
-WORKDIR ${HOME}
+#WORKDIR ${HOME}
 
 # This default user is created in the openshift/base-centos7 image
 USER 1001
