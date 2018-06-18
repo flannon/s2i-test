@@ -4,7 +4,8 @@
 #FROM openshift/base-centos7
 #FROM openjdk:8u171 
 
-FROM flannon/openjdk:8u171 
+#FROM flannon/openjdk:8u171 
+FROM 172.30.1.1:5000/test/docker-openjdk
 
 # TODO: Put the maintainer name in the image metadata
 MAINTAINER Flannon <flannon@nyu.edu>
