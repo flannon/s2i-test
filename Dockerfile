@@ -3,7 +3,7 @@
 #FROM tomcat:8.5.15-jre8-alpine
 #FROM openshift/base-centos7
 #FROM openjdk:8u171 
-FROM 9461ad7232f7:8u171 
+FROM flannon/openjdk::8u171 
 
 # TODO: Put the maintainer name in the image metadata
 MAINTAINER Flannon <flannon@nyu.edu>
