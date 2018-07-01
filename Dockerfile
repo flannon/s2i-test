@@ -27,7 +27,8 @@ LABEL io.k8s.description="Test Platform for building oc images" \
       io.k8s.display-name="builder 0.0.1" \
       io.openshift.expose-services="8080:http" \
       io.openshift.tags="builder,0.0.1,test" \
-      io.openshift.s2i.scripts-url="image:///usr/libexec/s2i" 
+      io.openshift.s2i.scripts-url="image://usr/libexec/s2i" 
+      #io.openshift.s2i.scripts-url="image:///usr/libexec/s2i" 
       #io.openshift.s2i.scripts-url="image://${HOME}/s2i/bin"
 
 # TODO: Install required packages here:
