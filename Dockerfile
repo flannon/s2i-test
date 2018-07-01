@@ -41,7 +41,7 @@ RUN yum install -y epel-release && \
 
 # Copy the S2I scripts to /usr/libexec/s2i, since openshift/base-centos7 image
 # sets io.openshift.s2i.scripts-url label that way, or update that label
-COPY ./s2i /usr/libexec/s2i
+COPY ./s2i/bin /usr/libexec/s2i
 COPY ./init.sh ${HOME}/init.sh
 
 
