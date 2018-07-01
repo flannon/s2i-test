@@ -1,6 +1,8 @@
 
 # Creating a basic S2I builder image  
 
+This is a basic test configuration to demonstrate s2i in minishift.  It deploys a simple hearbeat applicaiton to keep the contianer alive.
+
 ## Getting started  
 
 ### Files and Directories  
@@ -40,21 +42,39 @@ Create a *usage* script that will print out instructions on how to use the image
 Make sure that all of the scripts are executable by running *chmod +x s2i/bin/**
 
 #### Create the builder image
-The following command will create a builder image named testImage based on the Dockerfile that was created previously.
-```
-docker build -t testImage .
-```
-The builder image can also be created by using the *make* command since a *Makefile* is included.
 
-Once the image has finished building, the command *s2i usage testImage* will print out the help info that was defined in the *usage* script.
+You can test building the image in the docker registry, 
+
+    docker build testimage .
+
+or make the builder image directly from the git repo with oc,
+
+    oc new-build flannon/s2i-test
+
+Once the image has finished building, the command, 
+
+    s2i usage <image-name:latest>
+
+To get the full image name you can query the docker registry,
+
+    docker images | grep s2i-test
+
+In my case I did this to run the usage script,
+
+    s2i usage 172.30.1.1:5000/myproject/s2i-test:latest
+
 
 #### Testing the builder image
-The builder image can be tested using the following commands:
+You can test the image from the  docker build like this:
 ```
-docker build -t testImage-candidate .
+docker build -t testimage-candidate .
 IMAGE_NAME=testImage-candidate test/run
 ```
-The builder image can also be tested by using the *make test* command since a *Makefile* is included.
+
+Or just run the Makefile and and it'll test the image,
+
+    make test
+
 
 #### Creating the application image
 The application image combines the builder image with your applications source code, which is served using whatever application is installed via the *Dockerfile*, compiled using the *assemble* script, and run using the *run* script.
