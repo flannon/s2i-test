@@ -1,5 +1,5 @@
 
-IMAGE_NAME = testImage
+IMAGE_NAME = flannon/s2i-test
 
 .PHONY: build
 build:
