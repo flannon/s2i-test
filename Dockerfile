@@ -28,7 +28,6 @@ LABEL io.k8s.description="Test Platform for building oc images" \
       io.openshift.expose-services="8080:http" \
       io.openshift.tags="builder,0.0.1,test" \
       io.openshift.s2i.scripts-url="image:///usr/libexec/s2i/bin" 
-      #io.openshift.s2i.scripts-url="image://${HOME}/s2i/bin"
 
 # TODO: Install required packages here:
 # RUN yum install -y ... && yum clean all -y
@@ -41,14 +40,7 @@ RUN yum install -y epel-release && \
 
 # Copy the S2I scripts to /usr/libexec/s2i, since openshift/base-centos7 image
 # sets io.openshift.s2i.scripts-url label that way, or update that label
-
-# This doesn't quite seem right.  The runscript for `oc new-app` runs
-# from /usr/libexec/s2i/bin/run
-# but the s2i cli runs the usage script from /usr/libexec/s2i/usage
-# `s2i usage <image-name:latest>`
-# to get everything working you need two COPY statements
 COPY ./s2i /usr/libexec/s2i
-#COPY ./s2i/bin/usage /usr/libexec/s2i
 
 COPY ./init.sh ${HOME}/init.sh
 
