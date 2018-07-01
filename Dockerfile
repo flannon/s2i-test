@@ -1,7 +1,7 @@
 # testImage
 
-#FROM tomcat:8.5.15-jre8-alpine
 FROM openshift/base-centos7
+#FROM tomcat:8.5.15-jre8-alpine
 #FROM openjdk:8u171 
 
 #FROM flannon/openjdk:8u171 
@@ -41,8 +41,14 @@ RUN yum install -y epel-release && \
 
 # Copy the S2I scripts to /usr/libexec/s2i, since openshift/base-centos7 image
 # sets io.openshift.s2i.scripts-url label that way, or update that label
+
+# This doesn't quite seem right.  The runscript for `oc new-app` runs
+# from /usr/libexec/s2i/bin/run
+# but the s2i cli runs the usage script from /usr/libexec/s2i/usage
+# `s2i usage <image-name:latest>`
+# to get everything working you need two COPY statements
 COPY ./s2i /usr/libexec/s2i
-#COPY ./s2i/bin/usage /usr/libexec/s2i
+COPY ./s2i/bin/usage /usr/libexec/s2i
 
 COPY ./init.sh ${HOME}/init.sh
 
